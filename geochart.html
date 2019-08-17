@@ -1,0 +1,113 @@
+<html lang="en">
+  <head>
+  <meta charset="utf-8" />
+    <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type='text/javascript'>
+     google.charts.load('current', {
+       'packages': ['geochart'],
+       // Note: you will need to get a mapsApiKey for your project.
+       // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
+       //'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+     });
+     //google.charts.setOnLoadCallback(drawMarkersMap);
+      google.charts.setOnLoadCallback(drawChart);
+
+
+/*      function drawMarkersMap() {
+      var data = google.visualization.arrayToDataTable([
+        ['City',   'Population', 'Area'],
+        ['EPWA',      2761477,    1285.31],
+        ['Milan',     1324110,    181.76],
+        ['Naples',    959574,     117.27],
+        ['Turin',     907563,     130.17],
+        ['Palermo',   655875,     158.9],
+        ['Genoa',     607906,     243.60],
+        ['Bologna',   380181,     140.7],
+        ['Florence',  371282,     102.41],
+        ['Fiumicino', 67370,      213.44],
+        ['Anzio',     52192,      43.43],
+        ['Ciampino',  38262,      11]
+      ]);
+
+      var options = {
+        region: 'PL',
+        displayMode: 'markers',
+	sizeAxis: { minValue: 10, maxValue: 30 },
+        colorAxis: {colors: ['green', 'blue']}
+      };
+
+      var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    };
+*/
+
+
+      function drawChart() {
+        var json = $.ajax({
+        url: "http://127.0.0.1:8080/data1.json",
+        dataType: "JSON",
+        success: function (jsonData) {
+            var data = new google.visualization.arrayToDataTable(jsonData);
+	    /*dataTable.addColumn('string','airport');
+	    dataTable.addColumn('string','context');
+	    dataTable.addColumn('number','id');
+	    dataTable.addColumn('string','location_subtype');
+	    dataTable.addColumn('string','location_type');
+	    dataTable.addColumn('string','month');
+	    dataTable.addColumn('string','persistent_id');
+	    dataTable.addColumn('string','street name');
+	    dataTable.addColumn('string','outcome status');
+
+	    json=JSON.parse(jsonData);
+
+	    for (var i=0;i<json.length;i++) {
+		    var row = [];       
+		    row.push(json[i].category);
+		    row.push(json[i].context);
+		    row.push(json[i].id);
+		    row.push(json[i].location_subtype);
+		    row.push(json[i].location_type);
+		    row.push(json[i].month);
+		    row.push(json[i].persistent_id);
+		    row.push(json[i].location.street.name);
+		    row.push(json[i].outcome_status ? json[i].outcome_status.category : "null");
+		    dataTable.addRow(row);
+		}*/
+            
+            /*var options = {
+                chart: {
+		    region:'PL',
+                    displayMode:'markers',
+		    colorAxis: {colors: ['green', 'blue']},
+                    title: 'METAR for POLAND',
+                    subtitle: 'metar'
+                },
+                width: 600,
+                height: 300,
+                axes: {
+                    x: {
+                        10: { side: 'top' }
+                    }
+                }
+            };*/
+	    var options = {
+	    sizeAxis: { minValue: 17, maxValue: 25 },
+            region: 'PL',
+            displayMode: 'markers',	    
+            //colorAxis: {colors: ['red', 'blue']}
+	    colorAxis: {colors: ['#e7711c', '#4374e0']} // orange to blue
+      };
+            //var chart = new google.charts.Line(document.getElementById('line_top_x'));
+	    var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+            chart.draw(data,options);
+        }
+    });
+}
+    </script>
+  </head>
+  <body>
+    
+    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>
